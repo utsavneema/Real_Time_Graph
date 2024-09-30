@@ -1,0 +1,1 @@
+The map function effectively replaces the identified URLs with Microlink components while preserving and correctly formatting the surrounding text. This approach ensures that URLs are converted into rich previews without disturbing the original text content structure.
