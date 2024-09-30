@@ -1,0 +1,34 @@
+ const handleScroll = debounce(() => {
+    try {
+      const scrollableDiv = scrollableRef.current;
+
+      if (scrollableDiv.scrollTop > 0) {
+        lastScrollDistanceRef.current = scrollableDiv.scrollTop;
+      }
+
+      // Calculate the distance from the top of the scrollable div to the bottom of the content
+      const distanceToBottom = scrollableDiv.scrollHeight - (scrollableDiv.scrollTop + scrollableDiv.clientHeight);
+
+      if (distanceToBottom <= 1 && hasNextPage) {
+        // Store the current scroll position before loading new content
+        const currentScrollHeight = scrollableDiv.scrollHeight;
+
+        // Increment the page and load more commits
+        pageRef.current += 1;
+        updateCommits().then(() => {
+          // After loading new commits, adjust the scroll position
+          const newScrollHeight = scrollableDiv.scrollHeight; // Get new scroll height after content is added
+
+          // Calculate the difference in height
+          const scrollHeightDifference = newScrollHeight - currentScrollHeight;
+
+          // Update the scroll position to keep it consistent
+          console.log(newScrollHeight, "newScrollHeight", scrollHeightDifference);
+
+          scrollableDiv.scrollTop += scrollHeightDifference; // Maintain current position
+        });
+      }
+    } catch (error) {
+      console.error("Error in scrolling:", error);
+    }
+  }, 500);
