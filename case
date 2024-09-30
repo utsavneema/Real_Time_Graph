@@ -1,0 +1,1 @@
+Using ejInstance.current for Undo/Redo: The keydown handler now checks and uses ejInstance.current to call undo() and redo(), ensuring it references the correct editor instance.
