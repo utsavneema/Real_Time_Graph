@@ -1,0 +1,16 @@
+useEffect(() => {
+    setTimeout(() => {
+      const scrollableRoot = scrollableRef.current;
+      const lastScrollDistanceToBottom =
+        lastScrollDistanceRef.current ?? 0;
+      // 
+      if (previousRepository === repository && scrollableRoot) {
+        console.log("scroll scrolling to last bottom", lastScrollDistanceRef.current)
+        scrollableRoot.scrollTo(
+          0,
+          lastScrollDistanceToBottom
+        );
+      }
+    }, 200)
+
+  }, [gitAdminCommits.length]);
