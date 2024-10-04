@@ -1,0 +1,178 @@
+{!isEnabledDevice && (
+                <>
+                  <div className="aside-nav-divider"></div>
+                  <details id="app_tour" className="aside-dropdown" open>
+                    <summary className="aside-dropdown-inner">
+                      <div className="aside-dropdown-title">
+                        <span className="aside-dropdown-icon">
+                          <CaretDownIcon className="icon" />
+                        </span>{" "}
+                        Apps
+                      </div>
+                      <div className="aside-dropdown-actions">
+                        {/* <Tooltip title="Add apps" mouseLeaveDelay={0}> */}
+                        <div
+                          onClick={(e) => {
+                            if (isWorkspaceData) {
+                              e.preventDefault();
+                              dispatch(
+                                workspaceActions.toggleSideBar(!isActive)
+                              );
+                              history.push(
+                                !path.includes("/chat")
+                                  ? `/app/app-center/${currentWorkspaceData?._id}`
+                                  : "/chat" +
+                                  `/app-center/${currentWorkspaceData?._id}`
+                              );
+                            }
+                          }}
+                          className="aside-dropdown-add"
+                        >
+                          <PlusIcon />
+                        </div>
+                        {/* </Tooltip> */}
+                      </div>
+                    </summary>
+                    <ul className="aside-direct-list">
+                      {/* <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/onekanban"
+                      )
+                        ? "aside-list-item active"
+                        : `aside-list-item ${isDisabled}`
+                    }
+                    onClick={() =>{
+                      if(isWorkspaceData){
+                      history.push(`/app/onekanban/${currentWorkspaceData._id}`)
+                      }}
+                    }
+                  >
+                    <ProductKanbanIcon className="icon" /> One Kanban
+                  </li>
+                  <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/oneapi"
+                      )
+                        ? "aside-list-item active"
+                        : `aside-list-item ${isDisabled}`
+                    }
+                    onClick={() =>{
+                      if(isWorkspaceData){
+                      history.push(`/app/oneapi/${currentWorkspaceData._id}`)
+                    }}
+                    }
+                  >
+                    <ProductApiIcon className="icon" /> One API
+                  </li>
+                  <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/onecicd"
+                      )
+                        ? "aside-list-item active"
+                        : `aside-list-item ${isDisabled}`
+                    }
+                    onClick={() =>
+                     { if(isWorkspaceData){
+                       history.push(`/app/onecicd/${currentWorkspaceData._id}`)
+                      }}
+                    }
+                  >
+                    <ProductCiCdIcon className="icon" /> One CICD
+                  </li>
+                  <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/onecode"
+                      )
+                        ? "aside-list-item active"
+                        : `aside-list-item ${isDisabled}`
+                    }
+                    onClick={() =>
+                    { if(isWorkspaceData){ 
+                      history.push(`/app/onecode/${currentWorkspaceData._id}`)
+                    }}
+                    }
+                  >
+                    <ProductCode className="icon" /> One Code
+                  </li>
+
+                  <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/onedoc"
+                      )
+                        ? "aside-list-item active"
+                        : `aside-list-item ${isDisabled}`
+                    }
+                    onClick={() => {
+                      if (isWorkspaceData) {
+                        history.push(`/app/onedoc/${currentWorkspaceData._id}`)
+                      }
+                    }
+                    }
+                  >
+                    <ProductCode className="icon" /> One Doc
+                  </li>
+                  <li
+                    className={
+                      get(history, "location.pathname", "").includes(
+                        "/app/oneanalytics"
+                      )
+                        ? "aside-list-item active"
+                        :`aside-list-item ${isDisabled}`
+                    }
+                    onClick={() =>
+                      { if(isWorkspaceData){
+                        history.push(
+                        `/app/oneanalytics/${currentWorkspaceData._id}`
+                      )}}
+                    }
+                  >
+                    <ProductAnalyticsIcon className="icon" />
+                    One Analytics
+                  </li> */}
+                      {/* {(currentWorkspaceData?.userId === users?._id ||
+                    (currentWorkspaceData?.permission &&
+                      currentWorkspaceData?.permission.find(
+                        (m) => m === moduleName
+                      ))) && (
+                    <li
+                      className={
+                        get(history, "location.pathname", "").includes(
+                          "/app/onereport"
+                        )
+                          ? "aside-list-item active"
+                          : "aside-list-item"
+                      }
+                      onClick={() => history.push(`/app/onereport/${currentWorkspaceData._id}`)}
+                    >
+                      <ProductReport className="icon" /> One Report
+                    </li>
+                  )} */}
+                      {renderAppChannels()}
+                      <li>
+                        <button
+                          className="btn btn-aside-default"
+                          onClick={(e) => {
+                            if (isWorkspaceData) {
+                              e.preventDefault();
+                              history.push(
+                                !path.includes("/chat")
+                                  ? `${url}/app-center/${currentWorkspaceData?._id}`
+                                  : "/chat" +
+                                  `/app-center/${currentWorkspaceData?._id}`
+                              );
+                            }
+                          }}
+                        >
+                          <PlusIcon className="icon" /> Add apps
+                        </button>
+                      </li>
+                      {/* {renderAppChannels()} */}
+                    </ul>
+                  </details>
+                </>
+              )}
