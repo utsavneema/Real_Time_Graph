@@ -1,0 +1,16 @@
+ <div className="aside-dropdown-title">
+                    <span className="aside-dropdown-icon">
+                      <CaretDownIcon className="icon" />
+                    </span>{" "}
+                    Out of officee
+                  </div> <div className="aside-dropdown-title">
+                    <span className="aside-dropdown-icon">
+                      <CaretDownIcon className="icon" />
+                    </span>{" "}
+                    Out of officee
+                  </div> <div className="aside-dropdown-title">
+                    <span className="aside-dropdown-icon">
+                      <CaretDownIcon className="icon" />
+                    </span>{" "}
+                    Out of officee
+                  </div>
