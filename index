@@ -1,0 +1,50 @@
+<ReactModal
+        isOpen={removeAccount}
+        contentLabel="Remove Account "
+        ariaHideApp={false}
+        onRequestClose={() => setRemoveAccount(false)}
+        portalClassName="react-modal"
+        overlayClassName="modal"
+        className="modal-dialog react-modal-dialog-xs modal-dialog-centered"
+      >
+        <div className="modal-content">
+          <div className="react-modal-header">
+            <h5 className="react-modal-title">Remove Account</h5>
+            <button
+              className="btn react-modal-close"
+              onClick={() => setRemoveAccount(false)}
+            >
+              <CloseIcon />
+            </button>
+          </div>
+          <div className="react-modal-body">
+            <div className="react-modal-body-content">
+              <div className="react-modal-body-text">
+                Do you Want to remove account?
+              </div>
+            </div>
+          </div>
+          <div className="react-modal-footer">
+            <button
+              type="button"
+              className="btn btn-md btn-global-secondary"
+              onClick={() => setRemoveAccount(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-md btn-global-danger"
+              onClick={() => {
+                dispatch(removeLinkedAccounts(key));
+                setRemoveAccount(false);
+                message.success("Account Removed");
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </ReactModal>
+      {calendarModal && <EventScheduler reminderEvents={reminderEvents} />}
+    </>
