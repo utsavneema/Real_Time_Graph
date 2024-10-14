@@ -1,0 +1,26 @@
+ function hideChatForUser(e, data) {
+    e.stopPropagation();
+    const matrixRoomInfo = { ...data.matrixRoomInfo };
+    const leave_members = [...get(data, "matrixRoomInfo.leave_members", [])];
+    leave_members.push(
+      "@" + get(users, "matrixUsername", "") + ":" + `${env.NX_MATRIX_DOMAIN}`
+    );
+    matrixRoomInfo.leave_members = leave_members;
+    dispatch(chatActions.removeSelectedChannel(data));
+    dispatch(
+      updateChannel({
+        _id: data._id,
+        matrixRoomId: data.matrixRoomId,
+        matrixRoomInfo: matrixRoomInfo,
+      })
+    );
+    const room = rooms.find((room) => room.name === "public channel");
+    // dispatch(chatActions.onSelectChat({ room: room }));
+    if (selectedRoom?._id === data?._id) {
+      history.push(
+        !path.includes("/chat")
+          ? `/app/onechat/${room?.workspace?._id}/${room?._id}`
+          : "/chat" + `/app/onechat/${room?.workspace?._id}/${room?._id}`
+      );
+    }
+  }
