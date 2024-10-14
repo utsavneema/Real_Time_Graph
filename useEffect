@@ -1,0 +1,9 @@
+  useEffect(() => {
+    if (rooms.length > 0 && channelToSwitch.id) {
+      const channel = rooms.find((room) => room._id === channelToSwitch.id);
+      if (channel) {
+        onSelectRoom(channel);
+        dispatch(chatActions.resetChannelToSwitch());
+      }
+    }
+  }, [rooms, channelToSwitch]);
