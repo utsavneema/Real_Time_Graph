@@ -1,0 +1,46 @@
+const SuggestionsListComponent = () => {
+    const members = selectedRoom?.matrixRoomEvent?.currentState?.members;
+    return (
+      <div className="ui-autocomplete-suggestions">
+        {filteredData.length ? (
+          <ul className="suggestions">
+            {filteredData.map((item, index) => {
+              const className =
+                index === activeSuggestionIndex ? "suggestion-active" : ""
+
+              return (
+                <>
+                  <li
+                    className={className}
+                    key={getDisplayText(item)}
+                    onMouseOver={() => handleMouseOver(index)}
+                    onClick={() => {
+                      const userId = `@${get(item, "matrixUsername", "")}:${env.NX_MATRIX_DOMAIN}`;
+                      if (members[userId] === undefined || (members[userId] && members[userId].membership === "leave")) {
+                        handleClick(item)
+                      }
+                    }
+                    }
+                  >
+                    <div
+                      className="avatar avatar-xs"
+                      style={{
+                        backgroundColor: getUserColor(
+                          "@" +
+                          get(item, "matrixUsername", "") +
+                          ":" +
+                          `${env.NX_MATRIX_DOMAIN}`,
+                          usersColor,
+                        ),
+                      }}
+                    >
+                      {item?.profileImageUrl && item?.profileImageUrl !== "" ? (
+                        <img src={getAvatar(item)} alt={getDisplayText(item)} />
+                      ) : (
+                        <div className="avatar-string">{item.firstName[0]}</div>
+                      )}
+                    </div>
+                    {getDisplayText(item)}
+                    <span className="ui-autocomplete-suggestions-already-in-channel">
+                      {
+                        (members[`
