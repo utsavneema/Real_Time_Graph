@@ -1,0 +1,113 @@
+  const onCreateModal = async () => {
+    const arr = [
+      "Chat",
+      "Api",
+      "Kanban",
+      "CICD",
+      "Analytics",
+      "LLM",
+      "Notes",
+      "Public Channel",
+      "One Chat",
+      "One Api",
+      "One Kanban",
+      "One CICD",
+      "One Analytics",
+      "One LLM",
+      "One Notes",
+      "One Report",
+      "Github",
+      "direct_chat",
+      "direct_message",
+      "One-Chat",
+      "One-Api",
+      "One-Kanban",
+      "One-CICD",
+      "One-Analytics",
+      "One-LLM",
+      "One-Notes",
+      "One-Report",
+      "Github-",
+      "direct-chat",
+      "direct-message",
+      "custom-app",
+      "kanbanboard",
+    ];
+    const lowercaseName = name.toLowerCase();
+    const err = { ...error };
+    if (
+      arr.some(
+        (item) =>
+          item.toLowerCase() === lowercaseName ||
+          lowercaseName.includes(item.toLowerCase())
+      )
+    ) {
+      err.name =
+        "This channel name is prohibited or contains reserved words. Please choose a different name.";
+    }
+    setError(err);
+    if (!Object.keys(err).length) {
+      dispatch(workspaceActions.toggleSideBar(false));
+      await dispatch(
+        createRoom({
+          name,
+          is_direct: false,
+          visibility: true,
+          preset: "trusted_private_chat",
+          topic: "",
+        })
+      )
+        .then((response) => {
+          dispatch(chatActions.toogleCreateRoomModal(false));
+          if (response?.payload == undefined) {
+            dispatch(chatActions.toogleCreateRoomModal(true));
+            err.name = response?.error?.message;
+            setError(err);
+          }
+          return response?.payload?.data?.createPrivateRoomForUser;
+        })
+        .then(async(res) => {
+          if (history.location.pathname !== "/app") {
+            if (res?.workspace?._id !== undefined && res?._id !== undefined) {
+              setTimeout(() => {
+              history.push(`/app/onechat/${res?.workspace?._id}/${res?._id}`);
+              }, 1000);
+            } else {
+              history.push();
+            }
+          }
+        });
+    }
+  }
+  async function onSelectRoom(data) {
+    dispatch(workspaceActions.toggleSideBar(false));
+    if (
+      !(
+        (
+          get(history, "location.pathname", "") === "/" ||
+          get(history, "location.pathname", "").includes("/app/onechat") ||
+          get(history, "location.pathname", "").includes("/chat") ||
+          get(history, "location.pathname", "").includes("/chat/app")
+        )
+      )
+    ) {
+      dispatch(chatActions.toogleThreadModal(false));
+      dispatch(chatActions.onSelectRoom({ room: data }));
+      history.push(
+        !path.includes("/chat")
+          ? `/app/onechat/${data?.workspace?._id}/${data?._id}`
+          : "/chat" + `/app/onechat/${data?.workspace?._id}/${data?._id}`
+      );
+    } else {
+      dispatch(chatActions.isRightBar(false));
+      dispatch(chatActions.onSelectChat({ room: data }));
+      dispatch(chatActions.toogleThreadModal(false));
+      history.push(
+        !path.includes("/chat")
+          ? `/app/onechat/${data?.workspace?._id}/${data?._id}`
+          : "/chat" + `/app/onechat/${data?.workspace?._id}/${data?._id}`
+      );
+      dispatch(getRoomTopic({ roomId: data.matrixRoomId }));
+    }
+    dispatch(chatActions.toogleProfileModal(false));
+  }
